@@ -1,72 +1,85 @@
 # vim: ts=2: sw=2: ft=gitconfig
 
 [user]
-  email = stigpro@outlook.fr
-  name = Nicolas signed-log FORMICHELLA
-  signingKey = 4283F127DD1E0E2EA976F3C0273140E170D76BA6 
+email = stigpro@outlook.fr
+name = Nicolas signed-log FORMICHELLA
+signingKey = 4283F127DD1E0E2EA976F3C0273140E170D76BA6
 
 [apply]
-  ignorewhitespace = change
-  whitespace = nowarn
+ignorewhitespace = change
+whitespace = nowarn
 
 [push]
-  rebase = true
-  followTags = true
+rebase = true
+followTags = true
 
 [color]
-  ui = auto
-  diff = auto
+ui = auto
+diff = auto
 
 [core]
-  mergeoptions = --no-edit
-	autocrlf = false
-  pager = less -FiR # -F is necessary but has problems with tmux and regular shells
-  excludesfile = ~/.config/git/global_gitignore
-  quotepath = false
-  editor = nvim
-  untrackedCache = true
+mergeoptions = --no-edit
+autocrlf = false
+pager = less -FiR # -F is necessary but has problems with tmux and regular shells
+excludesfile = ~/.config/git/global_gitignore
+quotepath = false
+editor = nvim
+untrackedCache = false
 
 [url "https://"]
-	insteadOf = git://
+insteadOf = git://
 
 [commit]
-	gpgSign = true
+gpgSign = true
 
 [diff]
-  # detect renamed files and show only actual differences between them
-  renames = copies
-  tool = nvimdiff
+# detect renamed files and show only actual differences between them
+renames = copies
+tool = nvimdiff
 
 [difftool "nvimdiff"]
-  cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 
 [mergetool "merge3"]
-  layout = LOCAL,MERGED,REMOTE
+layout = LOCAL,MERGED,REMOTE
 
 [format]
-  signOff = true
+signOff = true
 
 [merge]
-      tool = vscode
+tool = vscode
 [mergetool "vscode"]
-  # Comment: Original way before three-way merge shown commented out
-  #    cmd = code --wait $MERGED
-  # Comment: For "Three-way merge"
-  cmd = code-insiders --wait --merge $REMOTE $LOCAL $BASE $MERGED
+# Comment: Original way before three-way merge shown commented out
+#    cmd = code --wait $MERGED
+# Comment: For "Three-way merge"
+cmd = code-insiders --wait --merge $REMOTE $LOCAL $BASE $MERGED
+
 [diff]
-  tool = vscode
+tool = vscode
 [difftool "vscode"]
-      cmd = code-insiders --wait --diff $LOCAL $REMOTE
-  # Comment: End of "Extra Block"
+cmd = code-insiders --wait --diff $LOCAL $REMOTE
+# Comment: End of "Extra Block"
 
 [rebase]
-  # automatically process "fixup!" commits when rebasing interactively
-  autosquash = true
+# automatically process "fixup!" commits when rebasing interactively
+autosquash = true
 
 [init]
-	defaultBranch = main
+defaultBranch = main
+[fetch "fsck"]
+badTimezone = ignore
+[apply]
+ignoreWhitespace = change
+[rerere]
+enabled = true
+autoUpdate = true
+[am]
+threeWay = true
+[log]
+abbrevCommit = true
+decorate = short
+[format]
+signOff = true
 
 [include]
-  path = ~/.config/git/aliases.gitconfig
-
-
+path = ~/.config/git/aliases.gitconfig
