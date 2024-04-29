@@ -6,7 +6,7 @@
 	url = https://github.com/tmux-plugins/tpm.git
 [submodule ".config/nvim"]
 	path = .config/nvim
-	url = https://github.com/AstroNvim/AstroNvim
+	url = https://github.com/signed-log/astronvim_v4.git
 [submodule ".config/astronvim"]
 	path = .config/astronvim
 	url = https://github.com/signed-log/astronvim_cfg.git
