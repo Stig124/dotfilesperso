@@ -53,7 +53,11 @@ function zyp {
     "winetricks"
     "python3-pip"
   )
+  NO_RECOMMENDS_ZYP_APPS=(
+    "python3-ipython"
+  )
   $ZYP_COMMAND install --auto-agree-with-licenses "${ZYP_APPS[@]}"
+  $ZYP_COMMAND install --auto-agree-with-licenses --no-recommends "${NO_RECOMMENDS_ZYP_APPS[@]}"
   remove-and-lock
 }
 
@@ -71,10 +75,11 @@ function fpk {
 function gext {
   GNOME_EXTS=(
     "caffeine@patapon.info"
-    "advanced-alt-tab@G-dH.github.com"
     "appindicatorsupport@rgcjonas.gmail.com"
     "BingWallpaper@ineffable-gmail.com"
     "just-perfection-desktop@just-perfection"
+    "steal-my-focus-window@steal-my-focus-window"
+    "nightthemeswitcher@romainvigier.fr"
   )
   gnome-extensions-cli install "${GNOME_EXTS[@]}"
 }
@@ -83,7 +88,6 @@ function pippkg {
   PIP_PACKAGES=(
     "gnome-extensions-cli"
     "spec-cleaner"
-    "ipython"
     "pipenv"
   )
   pip install --user --break-system-packages --upgrade "${PIP_PACKAGES[@]}"
