@@ -1,11 +1,11 @@
 #!/usr/bin/zsh
 
 if command -v bat >/dev/null; then
-  alias cat=bat
+  alias cat="bat -p"
 fi
 
-if command -v exa >/dev/null; then
-  alias ls="exa --group-directories-first --all"
+if command -v eza >/dev/null; then
+  alias ls="eza --group-directories-first --all"
 fi
 
 pdfcompress() {
@@ -14,14 +14,6 @@ pdfcompress() {
 
 pdfcombine() {
   gs -q -dNOPAUSE -sDEVICE=pdfwrite -sOUTPUTFILE=${1%.*}.pdf -dBATCH ${@:2}
-}
-
-pipenv-base() {
-  pipenv -v install --dev yapf pre-commit ruff ipython pyright pylint coverage && pipenv -v install $@
-}
-
-startmlv() {
-  sudo systemctl daemon-reload ; sudo systemctl start mullvad-daemon
 }
 
 tohex() {
