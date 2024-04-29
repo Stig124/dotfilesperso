@@ -6,6 +6,7 @@ fi
 
 zi_home="${HOME}/.zi"
 
+# Install ZI package manager
 if [[ ! -d "$zi_home"/bin ]]; then
   typeset -Ag ZI
   export ZI[BIN_DIR]="${XDG_CONFIG_HOME:-${HOME}/.config}/zi/bin"
@@ -19,7 +20,6 @@ else
   autoload -Uz _zi
   (( ${+_comps} )) && _comps[zi]=_zi
 fi
-
 
 # Git
 zi snippet OMZL::git.zsh
@@ -43,6 +43,8 @@ zi snippet OMZP::pip
 zi snippet OMZP::pipenv
 zi snippet OMZP::python
 zi snippet OMZP::pylint
+zi snippet OMZP::poetry
+zi snippet OMZP::poetry-env
 
 # Sysadmin
 zi snippet OMZP::sudo
@@ -55,10 +57,12 @@ zi snippet OMZP::tmux
 zi snippet OMZP::urltools
 zi snippet OMZP::common-aliases
 
+# Needed because zi is sometimes buggy
 zi ice as"completion"
 zi snippet OMZP::ag/_ag
 zi snippet OMZP::docker
 
+# Man pages
 zi snippet OMZP::colored-man-pages
 
 # OOB (Out-of-band)
@@ -84,9 +88,15 @@ if command -v gh > /dev/null; then
 fi
 
 if command -v pipenv > /dev/null; then
-  _PIPENV_COMPLETE=zsh_source pipenv > "$HOME/.local/share/completions/_pipenv"
+  if ! [ -f "$HOME/.local/share/completions/_pipenv" ]; then
+    _PIPENV_COMPLETE=zsh_source pipenv > "$HOME/.local/share/completions/_pipenv"
+  fi
   zi ice lucid wait as'completion' blocf has'pipenv'
   zi snippet "$HOME/.local/share/completions/_pipenv"
+fi
+
+if command -v kubectl > /dev/null; then
+  source <(kubectl completion zsh)
 fi
 
 setopt promptsubst
@@ -142,15 +152,14 @@ if [[ -d $HOME/.pyenv ]]; then
   eval "$(pyenv virtualenv-init -)"
 fi
 
-if [ $(ps ax | grep "[s]sh-agent" | wc -l) -eq 0 ] ; then
-    eval $(ssh-agent -s) > /dev/null
-    if [ "$(ssh-add -l)" = "The agent has no identities." ] ; then
-        # Auto-add ssh keys to your ssh agent
-        # Example:
-        ssh-add ~/.ssh/id_ed25519_servers > /dev/null 2>&1
-        ssh-add ~/.ssh/id_ed25519_gitit > /dev/null 2>&1
-    fi
+if type gpg &> /dev/null; then
+  if [ $(ps ax | grep "[s]sh-agent" | wc -l) -eq 0 ] ; then
+      eval $(ssh-agent -s) > /dev/null
+      if [ "$(ssh-add -l)" = "The agent has no identities." ] ; then
+          # Auto-add ssh keys to your ssh agent
+          # Example:
+          ssh-add ~/.ssh/id_ed25519_servers > /dev/null 2>&1
+          ssh-add ~/.ssh/id_ed25519_gitit > /dev/null 2>&1
+      fi
+  fi
 fi
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
