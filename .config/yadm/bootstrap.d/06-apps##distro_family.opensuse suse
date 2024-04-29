@@ -7,14 +7,12 @@ ZYP_COMMAND="sudo zypper -n --no-cd --ignore-unknown --userdata yadmbootstrap"
 
 function remove-and-lock {
   to_lock=(
-    "PackageKit"
-    "discover"
     "emacs-x11"
     "neovim-gtk"
     "opensuse-welcome"
     "power-profiles-daemon"
     "python-base"
-    "gnome-software"
+    "PackageKit"
   )
   $ZYP_COMMAND remove -y "${to_lock[@]}"
   $ZYP_COMMAND addlock "${to_lock[@]}"
@@ -23,37 +21,39 @@ function remove-and-lock {
 function zyp {
   ZYP_APPS=(
     "android-tools*"
-    "d-spy"
     "bat"
     "bluez"
-    "bluez-cups"
     "bluez-auto-enable-devices"
-    "neovim"
-    "wezterm"
-    "restic"
+    "bluez-cups"
+    "bsdtar"
+    "d-spy"
     "emacs-nox"
-    "the_silver_searcher"
+    "eza"
+    "flatpak"
+    "java-21-openjdk"
+    "java-21-openjdk-devel"
+    "java-21-openjdk-headless"
+    "lshw"
+    "lsof"
+    "neovim"
+    "nnn"
+    "obs-service*"
+    "restic"
     "steam"
     "steamcmd"
     "steamtricks"
+    "the_silver_searcher"
+    "tmux"
+    "topgrade"
+    "wezterm"
+    "wine-gecko"
+    "wine-mono"
     "wine-staging"
     "wine-staging-devel"
     "winetricks"
-    "wine-gecko"
-    "wine-mono"
-    "java-20-openjdk"
-    "java-20-openjdk-devel"
-    "java-20-openjdk-headless"
-    "bsdtar"
-    "tmux"
-    "lshw"
-    "lsof"
-    "nnn"
-    "obs-service*"
-    "flatpak"
     "python3-pip"
   )
-  $ZYP_COMMAND install -y --auto-agree-with-licenses "${ZYP_APPS[@]}"
+  $ZYP_COMMAND install --auto-agree-with-licenses "${ZYP_APPS[@]}"
   remove-and-lock
 }
 
@@ -63,15 +63,9 @@ function fpk {
     "com.mattjakeman.ExtensionManager"
     "org.gnome.Extensions"
     "ca.desrt.dconf-editor"
+    "xyz.armcord.ArmCord"
   )
   sudo flatpak install flathub -y "${FPK_APPS[@]}"
-}
-
-function snapd {
-  SNAP_APPS=(
-    "discord"
-  )
-  sudo snap install "${SNAP_APPS[@]}"
 }
 
 function gext {
@@ -100,7 +94,7 @@ function gpwsh {
 }
 
 function 64gram {
-  VERSION="1.0.91"
+  VERSION="1.1.5"
   URL="https://github.com/TDesktop-x64/tdesktop/releases/download/v${VERSION}/64Gram_${VERSION}_linux.zip"
   TMPDIR=$(mktemp -d)
   INSTALL_DIR="$HOME/.local/opt/64Gram"
@@ -116,7 +110,6 @@ function 64gram {
 
 command -v zypper > /dev/null 2>&1 && zyp
 command -v flatpak > /dev/null 2>&1 && fpk
-command -v snap > /dev/null 2>&1 && snapd
 command -v dotnet > /dev/null 2>&1 && gpwsh
 command -v curl > /dev/null 2>&1 && 64gram
 command -v pip > /dev/null 2>&1 && pippkg && gext
