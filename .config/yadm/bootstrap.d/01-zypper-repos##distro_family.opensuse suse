@@ -54,17 +54,7 @@ function dotnet {
   echo "Dotnet"
   $ZYP_COMMAND addrepo -cf https://packages.microsoft.com/opensuse/15/prod/ dotnet &&
     $ZYP_COMMAND --gpg-auto-import-keys refresh -r dotnet &&
-    $ZYP_COMMAND install -y --auto-agree-with-licenses dotnet\*7.0 aspnet\*7.0
-}
-
-function snapd {
-  echo "Snap"
-  $ZYP_COMMAND addrepo -cf 'https://download.opensuse.org/repositories/system:/snappy/openSUSE_Tumbleweed' snappy &&
-    $ZYP_COMMAND --gpg-auto-import-keys refresh -r snappy &&
-    $ZYP_COMMAND dist-upgrade --from snappy -y &&
-    $ZYP_COMMAND install -y snapd &&
-    sudo systemctl enable --now snapd &&
-    sudo systemctl enable --now snapd.apparmor
+    $ZYP_COMMAND install -y --auto-agree-with-licenses dotnet\*8.0 aspnet\*8.0
 }
 
 REPO_LIST=$($ZYP_COMMAND --xmlout lr | $YQ_COMMAND '.stream.repo-list.repo')
@@ -74,5 +64,4 @@ grep -i "librewolf" <<<"$REPO_LIST" >/dev/null 2>&1 || librewolf
 grep -i "packman" <<<"$REPO_LIST" >/dev/null 2>&1 || codecs
 grep -i "edge" <<<"$REPO_LIST" >/dev/null 2>&1 || edge
 grep -i "dotnet" <<<"$REPO_LIST" >/dev/null 2>&1 || dotnet
-grep -i "snappy" <<<"$REPO_LIST" >/dev/null 2>&1 || snapd
 grep -i "vscode" <<<"$REPO_LIST" >/dev/null 2>&1 || vscode
