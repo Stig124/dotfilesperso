@@ -3,7 +3,7 @@
 
 set -euo pipefail
 
-UDEV_DIR="$HOME/.config/udev"
+UDEV_DIR="$HOME/.config/udev/rules.d"
 UDEV_RULES=()
 
 mkdir -p "$UDEV_DIR"
@@ -60,6 +60,6 @@ nlink
 quartus
 stlink
 
-sudo cp "$UDEV_DIR/${UDEV_RULES[*]}" /etc/udev/rules.d/
+sudo cp "$UDEV_DIR"/"${UDEV_RULES[*]}" /etc/udev/rules.d/
 
 sudo udevadm control --reload-rules && sudo udevadm trigger
