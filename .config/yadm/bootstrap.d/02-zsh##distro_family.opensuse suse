@@ -16,7 +16,7 @@ fi
 
 if command -v restic; then
   command mkdir -p "$HOME/.local/share/completions/"
-  restic generate completion --zsh-completion "$HOME/.local/share/completions/_restic"
+  restic generate --zsh-completion "$HOME/.local/share/completions/_restic"
 fi
 
 if command -v gh; then
